@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <title>家庭远程监控</title>
+  <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+  <div class="container">
+    <header style="text-align:center">
+      <h1>家庭远程监控</h1>
+      <p class="sub">把闲置 iPhone 变成联网摄像头 · 随时随地网页观看</p>
+    </header>
+
+    <a class="card entry" href="camera.html">
+      <h2>相机端</h2>
+      <p class="sub">在作为摄像头的 iPhone 上打开，生成设备码并保持页面常亮</p>
+    </a>
+
+    <a class="card entry" href="viewer.html">
+      <h2>观看端</h2>
+      <p class="sub">在任何联网设备上打开，输入设备码即可实时查看</p>
+    </a>
+
+    <div class="card">
+      <h2 style="font-size:15px;margin-bottom:8px">使用说明</h2>
+      <ul class="tips">
+        <li>相机端 iPhone：连接电源，设置 自动锁定 = 永不，保持 Safari 此页在前台</li>
+        <li>观看端与相机端使用相同的设备码（相当于密码，请勿泄露）</li>
+        <li>视频与音频通过 WebRTC 点对点加密传输，不经过任何服务器</li>
+        <li>检测到画面移动时，两端都会保存截图记录</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

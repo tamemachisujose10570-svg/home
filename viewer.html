@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <title>监控观看端</title>
+  <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>监控观看端</h1>
+      <p class="sub">输入设备码，远程查看家中摄像头画面</p>
+    </header>
+
+    <div class="card">
+      <label for="codeInput">设备码</label>
+      <div class="row" style="margin-top:6px">
+        <input type="text" id="codeInput" maxlength="32" autocomplete="off" placeholder="与相机端一致的设备码" style="flex:1">
+        <button type="button" id="connectBtn">连接</button>
+      </div>
+      <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">未连接</span></div>
+    </div>
+
+    <div class="card" id="videoCard" hidden>
+      <video id="remoteVideo" autoplay playsinline></video>
+      <div class="row">
+        <button type="button" id="snapBtn" class="secondary">截图</button>
+        <button type="button" id="fullscreenBtn" class="secondary">全屏</button>
+        <button type="button" id="muteBtn" class="secondary">静音</button>
+      </div>
+    </div>
+
+    <div class="card" id="eventsCard" hidden>
+      <h2 style="font-size:16px">移动侦测 / 截图记录</h2>
+      <div class="list" id="eventList"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" hidden>
+    <img id="overlayImg" alt="">
+    <button type="button" class="overlay-close" id="overlayClose">关闭</button>
+  </div>
+
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="js/common.js?v=2"></script>
+  <script src="js/viewer.js?v=2"></script>
+</body>
+</html>
