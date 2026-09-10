@@ -10,6 +10,7 @@
   var copyBtn = document.getElementById('copyBtn');
   var switchBtn = document.getElementById('switchBtn');
   var stopBtn = document.getElementById('stopBtn');
+  var talkOnBtn = document.getElementById('talkOnBtn');
   var statusDot = document.getElementById('statusDot');
   var statusText = document.getElementById('statusText');
   var preview = document.getElementById('preview');
@@ -46,6 +47,7 @@
   switchBtn.addEventListener('click', switchCamera);
   copyBtn.addEventListener('click', copyCode);
   clearBtn.addEventListener('click', clearSnaps);
+  talkOnBtn.addEventListener('click', playTalkAudios);
   overlayClose.addEventListener('click', function () { overlay.hidden = true; });
   overlay.addEventListener('click', function () { overlay.hidden = true; });
 
@@ -57,7 +59,7 @@
   function getMedia() {
     return navigator.mediaDevices.getUserMedia({
       video: { facingMode: facing, width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
     });
   }
 
@@ -97,6 +99,11 @@
     dataConns = [];
     if (peer) { try { peer.destroy(); } catch (e) {} peer = null; }
     if (localStream) { localStream.getTracks().forEach(function (t) { t.stop(); }); localStream = null; }
+    Array.prototype.forEach.call(document.querySelectorAll('body > audio'), function (a) {
+      try { a.srcObject = null; } catch (e) {}
+      if (a.parentNode) a.parentNode.removeChild(a);
+    });
+    talkOnBtn.hidden = true;
     preview.srcObject = null;
     prevFrame = null;
     runCard.hidden = true;
@@ -144,14 +151,28 @@
       call = peer.call(viewerId, localStream);
     } catch (e) { return; }
     mediaConns.push(call);
-    call.on('close', function () {
+    var talkAudio = null;
+    call.on('stream', function (stream) {
+      if (!stream.getAudioTracks().length) return;
+      talkAudio = document.createElement('audio');
+      talkAudio.autoplay = true;
+      talkAudio.srcObject = stream;
+      document.body.appendChild(talkAudio);
+      talkAudio.play().then(function () {}, function () {
+        talkOnBtn.hidden = false;
+      });
+    });
+    var cleanupCall = function () {
+      if (talkAudio) {
+        try { talkAudio.srcObject = null; } catch (e) {}
+        if (talkAudio.parentNode) talkAudio.parentNode.removeChild(talkAudio);
+        talkAudio = null;
+      }
       mediaConns = mediaConns.filter(function (c) { return c !== call; });
       updateWatchCount();
-    });
-    call.on('error', function () {
-      mediaConns = mediaConns.filter(function (c) { return c !== call; });
-      updateWatchCount();
-    });
+    };
+    call.on('close', cleanupCall);
+    call.on('error', cleanupCall);
     updateWatchCount();
   }
 
@@ -358,6 +379,13 @@
     });
     old.getTracks().forEach(function (t) { t.stop(); });
     switchBtn.disabled = false;
+  }
+
+  function playTalkAudios() {
+    Array.prototype.forEach.call(document.querySelectorAll('body > audio'), function (a) {
+      a.play().catch(function () {});
+    });
+    talkOnBtn.hidden = true;
   }
 
   function copyCode() {

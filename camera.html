@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f1115">
   <title>监控相机端</title>
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
   <div class="container">
@@ -40,6 +40,7 @@
         <button type="button" id="copyBtn" class="secondary">复制设备码</button>
         <button type="button" id="switchBtn" class="secondary">切换前后摄像头</button>
         <button type="button" id="stopBtn" class="secondary">停止</button>
+        <button type="button" id="talkOnBtn" class="secondary" hidden>打开对讲喇叭</button>
       </div>
       <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">正在初始化…</span></div>
       <video id="preview" autoplay muted playsinline style="margin-top:14px"></video>
@@ -60,7 +61,7 @@
   </div>
 
   <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-  <script src="js/common.js?v=2"></script>
-  <script src="js/camera.js?v=2"></script>
+  <script src="js/common.js?v=3"></script>
+  <script src="js/camera.js?v=3"></script>
 </body>
 </html>

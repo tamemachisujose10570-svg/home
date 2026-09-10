@@ -69,6 +69,7 @@ button {
 
 button.secondary { background: #2a3040; }
 button:disabled { opacity: 0.5; cursor: default; }
+button.talking { background: var(--red); }
 
 .row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
 
@@ -92,7 +93,10 @@ button:disabled { opacity: 0.5; cursor: default; }
 .dot.wait { background: var(--yellow); }
 .dot.off { background: var(--red); }
 
-video { width: 100%; border-radius: 10px; background: #000; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+video { width: 100%; height: auto; min-height: 180px; border-radius: 10px; background: #000; display: block; }
+
+#videoCard { overflow: hidden; }
+#remoteVideo { touch-action: none; transform-origin: 0 0; }
 
 ul.tips { margin: 12px 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
